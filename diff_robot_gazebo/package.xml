@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>diff_robot_gazebo</name>
+  <version>0.0.0</version>
+  <description>
+    Simple differential drive robot model for Gazebo simulations
+  </description>
+  <maintainer email="mtradovn@oakland.edu">Micho Radovnikovich</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>gazebo_ros</depend>
+  <depend>roscpp</depend>
+  <depend>tf</depend>
+
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>xacro</exec_depend>
+</package>

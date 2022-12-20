@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Start Gazebo server and client -->
+  <arg name="world_name" default="$(find diff_robot_gazebo)/worlds/maze_world.world" />
+  <node name="gazebo" pkg="gazebo_ros" type="gzserver" respawn="false" output="screen" args="-e ode $(arg world_name)" />
+  <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
+  <param name="/use_sim_time" value="true" />
+
+  <!-- Spawn robot model in Gazebo -->
+  <arg name="robot_name" default="diff_robot" />
+  <arg name="start_x" default="0.0" />
+  <arg name="start_y" default="0.0" />
+  <arg name="start_z" default="0.0" />
+  <arg name="start_yaw" default="0.0" />
+  <arg name="ground_truth_mode" default="true" />
+
+  <group ns="$(arg robot_name)" >
+    <param name="robot_description" command="$(find xacro)/xacro '$(find diff_robot_gazebo)/urdf/robot.urdf.xacro' ground_truth:=$(arg ground_truth_mode) robot_name:=$(arg robot_name)" />
+    <node pkg="gazebo_ros" type="spawn_model"  name="spawn_$(arg robot_name)" args="-urdf -param robot_description -model $(arg robot_name) -x $(arg start_x) -y $(arg start_y) -z $(arg start_z) -Y $(arg start_yaw)"/>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="state_publisher">
+      <param name="publish_frequency" type="double" value="100.0" />
+    </node>
+  </group>
+
+</launch>
