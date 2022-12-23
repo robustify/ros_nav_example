@@ -31,3 +31,14 @@ When `ground_truth_mode` is set to `true`, a TF frame and corresponding `nav_msg
 This represents ideal ground truth localization information that can be used to focus on path planning algorithms without having to worry about localization.
 
 When `ground_truth_mode` is set to `false`, the TF frame and odometry message are not published at all. To successfully navigate the maze in this mode, a localization system using LIDAR SLAM is necessary.
+
+## `diff_drive_control` Package
+
+This package contains an example of how to implement the drive control of a differential drive mobile robot.
+The example node subscribes to a `geometry_msgs/Twist` topic and uses the speed and yaw rate values to generate left and right wheel speeds for the robot.
+
+## `dead_reckoning_odom` Package
+
+This package contains an example of how to implement a discrete state space model, and how to apply it to the task of dead reckoning navigation.
+The example node subscribes to a `geometry_msgs/TwistStamped` topic containing the measured speed and yaw rate of a robot, and produces an estimate of the vehicle's position and orientation in a global frame.
+This is done by recursively updating a discrete state space model using the speed and yaw rate data.

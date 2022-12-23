@@ -13,8 +13,7 @@
   <arg name="start_y" default="0.0" />
   <arg name="start_z" default="0.0" />
   <arg name="start_yaw" default="0.0" />
-  <arg name="ground_truth_mode" default="true" />
-
+  <arg name="ground_truth_mode" default="false" />
   <group ns="$(arg robot_name)" >
     <param name="robot_description" command="$(find xacro)/xacro '$(find diff_robot_gazebo)/urdf/robot.urdf.xacro' ground_truth:=$(arg ground_truth_mode) robot_name:=$(arg robot_name)" />
     <node pkg="gazebo_ros" type="spawn_model"  name="spawn_$(arg robot_name)" args="-urdf -param robot_description -model $(arg robot_name) -x $(arg start_x) -y $(arg start_y) -z $(arg start_z) -Y $(arg start_yaw)"/>
@@ -22,5 +21,11 @@
       <param name="publish_frequency" type="double" value="100.0" />
     </node>
   </group>
+
+  <!-- Drive control node -->
+  <node pkg="diff_drive_control" type="diff_drive.py" name="diff_drive_control" />
+
+  <!-- Dead reckoning odometry -->
+  <node pkg="dead_reckoning_odom" type="dead_reckoning.py" name="dead_reckoning_odom" />
 
 </launch>
