@@ -14,7 +14,10 @@ class DiffDrive:
         left_speed_msg = Float64()
         right_speed_msg = Float64()
 
-        # TODO: Implement kinematics equations here!
+        track_width = 1.0
+        wheel_radius = 0.2
+        left_speed_msg.data = (msg.linear.x - track_width * msg.angular.z / 2) / wheel_radius
+        right_speed_msg.data = (msg.linear.x + track_width * msg.angular.z / 2) / wheel_radius
 
         self.pub_left.publish(left_speed_msg)
         self.pub_right.publish(right_speed_msg)

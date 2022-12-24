@@ -26,6 +26,6 @@
   <node pkg="diff_drive_control" type="diff_drive.py" name="diff_drive_control" />
 
   <!-- Dead reckoning odometry -->
-  <node pkg="dead_reckoning_odom" type="dead_reckoning.py" name="dead_reckoning_odom" />
+  <node pkg="dead_reckoning_odom" type="dead_reckoning_odom" name="dead_reckoning_odom" />
 
 </launch>

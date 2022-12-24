@@ -10,7 +10,10 @@ void recvTwist(const geometry_msgs::Twist::ConstPtr& msg)
   std_msgs::Float64 left_wheel_command;
   std_msgs::Float64 right_wheel_command;
 
-  // TODO: Implement kinematics equations here!
+  double track_width = 1.0;
+  double wheel_radius = 0.2;
+  left_wheel_command.data = (msg->linear.x - track_width * msg->angular.z / 2) / wheel_radius;
+  right_wheel_command.data = (msg->linear.x + track_width * msg->angular.z / 2) / wheel_radius;
 
   pub_left.publish(left_wheel_command);
   pub_right.publish(right_wheel_command);
