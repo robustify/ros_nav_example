@@ -1,0 +1,7 @@
+<library path="lib/libdiff_local_planner">
+    <class name="diff_local_planner/DiffLocalPlanner" type="diff_local_planner::DiffLocalPlanner" base_class_type="nav_core::BaseLocalPlanner">
+    <description>
+      A differential drive local planner that explicitly follows the path given to it by the global planner.
+    </description>
+  </class>
+</library>

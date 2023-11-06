@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Bring up Gazebo in ground truth mode -->
+  <include file="$(find diff_robot_gazebo)/launch/run_simulation.launch">
+    <arg name="ground_truth_mode" value="true" />
+  </include>
+
+  <!-- This is the node that contains the global and local planners and costmaps -->
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+    <rosparam file="$(find maze_world_nav)/yaml/global_planner_params.yaml" ns="NavfnROS" />
+    <rosparam file="$(find maze_world_nav)/yaml/global_costmap_params.yaml" ns="global_costmap" />
+    <rosparam file="$(find maze_world_nav)/yaml/local_costmap_params.yaml" ns="local_costmap" />
+    <rosparam file="$(find maze_world_nav)/yaml/local_planner_params.yaml" ns="DiffLocalPlanner" />
+    <remap from="cmd_vel" to="/twist_cmd" />
+
+    <param name="base_local_planner" value="diff_local_planner/DiffLocalPlanner" />
+  </node>
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 world map" />
+
+  <!-- Differential drive kinematics node to convert speed and yaw rate into wheel speed commands -->
+  <node pkg="diff_drive_control" type="diff_drive_control" name="drive_control" output="screen" />
+
+  <!-- Launch Rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" respawn="true" args="-d $(find maze_world_nav)/rviz/rviz_config.rviz" />
+
+</launch>
